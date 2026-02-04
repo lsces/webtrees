@@ -38,12 +38,14 @@ class DB extends Manager
     public const string POSTGRES   = 'pgsql';
     public const string SQLITE     = 'sqlite';
     public const string SQL_SERVER = 'sqlsrv';
+    public const string FIREBIRD = 'firebird';
 
     private const array COLLATION_ASCII = [
         self::MYSQL      => 'ascii_bin',
         self::POSTGRES   => 'C',
         self::SQLITE     => 'BINARY',
         self::SQL_SERVER => 'Latin1_General_Bin',
+        self::FIREBIRD   => 'C',
     ];
 
     private const array COLLATION_UTF8 = [
@@ -51,6 +53,7 @@ class DB extends Manager
         self::POSTGRES   => 'und-x-icu',
         self::SQLITE     => 'NOCASE',
         self::SQL_SERVER => 'utf8_CI_AI',
+        self::FIREBIRD   => 'UTF8',
     ];
 
     private const array REGEX_OPERATOR = [
@@ -58,6 +61,7 @@ class DB extends Manager
         self::POSTGRES   => '~',
         self::SQLITE     => 'REGEXP',
         self::SQL_SERVER => 'REGEXP',
+        self::FIREBIRD   => '~',
     ];
 
     private const array DRIVER_INITIALIZATION = [
@@ -65,6 +69,7 @@ class DB extends Manager
         self::POSTGRES   => '',
         self::SQLITE     => 'PRAGMA foreign_keys = ON',
         self::SQL_SERVER => 'SET language us_english', // For timestamp columns
+        self::FIREBIRD   => '',
     ];
 
     public static function connect(
