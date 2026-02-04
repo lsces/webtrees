@@ -128,7 +128,7 @@ final class TreeExport extends AbstractCommand
                 break;
 
             case 'zipmedia':
-                $media_path     = $tree->getPreference('MEDIA_DIRECTORY');
+                $media_path     = $tree->mediaFolder();
                 $filename       = $tree_name . '.zip';
                 $zip_filesystem = new ZipArchive();
                 $zip_filesystem->open($filename, ZipArchive::CREATE | ZipArchive::OVERWRITE);

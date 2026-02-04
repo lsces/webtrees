@@ -49,7 +49,7 @@ final class ImportGedcomPage implements RequestHandlerInterface
         $data_filesystem = Registry::filesystem()->data();
         $data_folder     = Registry::filesystem()->dataName();
 
-        $default_gedcom_file = $tree->getPreference('gedcom_filename');
+        $default_gedcom_file = $tree->gedcomFilename();
         $gedcom_media_path   = $tree->getPreference('GEDCOM_MEDIA_PATH');
         $gedcom_files        = $this->admin_service->gedcomFiles($data_filesystem);
 

@@ -48,6 +48,7 @@ use function array_values;
 use function date;
 use function explode;
 use function max;
+use function mb_strtoupper;
 use function mb_substr;
 use function preg_match;
 use function preg_match_all;
@@ -246,7 +247,7 @@ class GedcomImportService
             $type = 'HEAD';
             $xref = 'HEAD'; // For records without an XREF, use the type as a pseudo XREF.
         } elseif (str_starts_with($gedrec, '0 TRLR')) {
-            $tree->setPreference('imported', '1');
+            DB::table('gedcom')->where('gedcom_id', '=', $tree->id())->update(['imported' => 1]);
             $type = 'TRLR';
             $xref = 'TRLR'; // For records without an XREF, use the type as a pseudo XREF.
         } elseif (preg_match('/^0 (_PTF|_PTE|_STF|_STE|_PLAC|_PEG|LABL) @/', $gedrec) === 1) {
@@ -417,8 +418,8 @@ class GedcomImportService
                         'm_id'                 => $xref,
                         'm_file'               => $tree_id,
                         'multimedia_file_refn' => mb_substr($media_file->filename(), 0, 248),
-                        'multimedia_format'    => mb_substr($media_file->format(), 0, 4),
-                        'source_media_type'    => mb_substr($media_file->type(), 0, 15),
+                        'multimedia_format'    => mb_strtoupper(mb_substr($media_file->format(), 0, 4)),
+                        'source_media_type'    => mb_strtoupper(mb_substr($media_file->type(), 0, 15)),
                         'descriptive_title'    => mb_substr($media_file->title(), 0, 248),
                     ]);
                 }

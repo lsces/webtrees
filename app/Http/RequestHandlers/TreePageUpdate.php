@@ -45,7 +45,7 @@ final class TreePageUpdate implements RequestHandlerInterface
         $defaults = Validator::parsedBody($request)->boolean('defaults', false);
 
         if ($defaults) {
-            $default_tree = new Tree(-1, 'DEFAULT', 'DEFAULT');
+            $default_tree = new Tree(-1, '', '', '', '', true, true, null, null);
 
             $main_blocks = $this->home_page_service->treeBlocks($default_tree, $user, ModuleBlockInterface::MAIN_BLOCKS)
                 ->map(static fn (ModuleBlockInterface $block) => $block->name());

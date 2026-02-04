@@ -31,6 +31,6 @@ class ImportGedcomTest extends TestCase
     {
         $tree = $this->importTree('demo.ged');
 
-        self::assertSame('1', $tree->getPreference('imported'));
+        self::assertTrue($tree->imported());
     }
 }

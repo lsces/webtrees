@@ -49,7 +49,7 @@ final class HomePage implements RequestHandlerInterface
         $user    = Validator::attributes($request)->user();
 
         if ($tree instanceof Tree) {
-            if ($tree->getPreference('imported') === '1') {
+            if ($tree->imported()) {
                 // Logged in?  Go to the user's page.
                 if ($user instanceof User) {
                     return redirect(route(UserPage::class, ['tree' => $tree->name()]));

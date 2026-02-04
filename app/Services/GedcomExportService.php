@@ -123,7 +123,7 @@ class GedcomExportService
         $zip_filesystem->open($temp_zip_file, ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
         if ($format === 'zipmedia') {
-            $media_path = $tree->getPreference('MEDIA_DIRECTORY');
+            $media_path = $tree->mediaFolder();
         } elseif ($format === 'gedzip') {
             $media_path = '';
         } else {
@@ -252,7 +252,7 @@ class GedcomExportService
 
                             if ($zip_filesystem instanceof ZipArchive) {
                                 // If the media file is stored locally, we can add it directly to the ZipArchive
-                                // $local_file = Site::getPreference('INDEX_DIRECTORY') . $tree->getPreference('MEDIA_DIRECTORY') . $media_path . $media_file;
+                                // $local_file = Site::getPreference('INDEX_DIRECTORY') . $tree->mediaFolder() . $media_path . $media_file;
                                 // $zip_filesystem->addFile($local_file, $media_path . $media_file);
 
                                 $zip_filesystem->addFromString($media_path . $media_file, $media_filesystem->read($media_file));

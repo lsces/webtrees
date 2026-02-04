@@ -62,8 +62,7 @@ final class CleanDataFolder implements RequestHandlerInterface
 
         // Protect the media folders
         foreach ($this->tree_service->all() as $tree) {
-            $media_directory = $tree->getPreference('MEDIA_DIRECTORY');
-            [$folder] = explode('/', $media_directory);
+            [$folder] = explode('/', $tree->mediaFolder());
 
             $protected[] = $folder . '/';
         }

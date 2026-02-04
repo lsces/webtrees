@@ -54,15 +54,10 @@ class TreeUser implements UserInterface
      */
     public function email(): string
     {
-        $user_service = Registry::container()->get(UserService::class);
-        $contact_id   = (int) $this->getPreference('CONTACT_USER_ID');
+        $contact = Registry::container()->get(UserService::class)->find($this->tree->contactUserId());
 
-        if ($contact_id !== 0) {
-            $contact = $user_service->find($contact_id);
-
-            if ($contact instanceof User) {
-                return $contact->email();
-            }
+        if ($contact instanceof User) {
+            return $contact->email();
         }
 
         return Site::getPreference('SMTP_FROM_NAME');

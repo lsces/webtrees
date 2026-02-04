@@ -102,7 +102,7 @@ final class TreeImport extends AbstractCommand
         try {
             DB::connection()->beginTransaction();
 
-            $tree->setPreference('imported', '0');
+            DB::table('gedcom')->where('gedcom_id', '=', $tree->id())->update(['imported' => 0]);
             $tree->setPreference('keep_media', $keep_media ? '1' : '0');
             $tree->setPreference('WORD_WRAPPED_NOTES', $word_wrapped_notes ? '1' : '0');
             $tree->setPreference('GEDCOM_MEDIA_PATH', $gedcom_media_path);
@@ -179,7 +179,7 @@ final class TreeImport extends AbstractCommand
 
             $output->writeln('');
 
-            $tree->setPreference('imported', '1');
+            DB::table('gedcom')->where('gedcom_id', '=', $tree->id())->update(['imported' => 1]);
 
             DB::connection()->commit();
         } catch (Throwable $ex) {

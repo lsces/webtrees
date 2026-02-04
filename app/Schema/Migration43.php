@@ -40,10 +40,5 @@ class Migration43 implements MigrationInterface
         ], [
             'setting_value' => $language ?? 'en-US',
         ]);
-
-        // Cleanup
-        DB::table('gedcom_setting')
-            ->where('setting_name', '=', 'LANGUAGE')
-            ->delete();
     }
 }

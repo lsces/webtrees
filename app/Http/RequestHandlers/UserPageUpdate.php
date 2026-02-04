@@ -45,7 +45,7 @@ final class UserPageUpdate implements RequestHandlerInterface
         $defaults = Validator::parsedBody($request)->boolean('defaults', false);
 
         if ($defaults) {
-            $default_tree = new Tree(-1, 'DEFAULT', 'DEFAULT');
+            $default_tree = new Tree(-1, '', '', '', '', true, true, null, null);
 
             $main_blocks = $this->home_page_service
                 ->userBlocks($default_tree, $user, ModuleBlockInterface::MAIN_BLOCKS)

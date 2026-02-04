@@ -113,8 +113,7 @@ class UserMessagesModule extends AbstractModule implements ModuleBlockInterface
             });
 
         $users = $this->user_service->all()->filter(static function (UserInterface $user) use ($tree): bool {
-            $public_tree  = $tree->getPreference('REQUIRE_AUTHENTICATION') !== '1';
-            $can_see_tree = $public_tree || Auth::accessLevel($tree, $user) <= Auth::PRIV_USER;
+            $can_see_tree = !$tree->private() || Auth::accessLevel($tree, $user) <= Auth::PRIV_USER;
 
             return
                 $user->id() !== Auth::id() &&

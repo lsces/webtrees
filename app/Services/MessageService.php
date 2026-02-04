@@ -65,8 +65,8 @@ class MessageService
     public function validContacts(Tree $tree): array
     {
         $contacts = [
-            $this->user_service->find((int) $tree->getPreference('CONTACT_USER_ID')),
-            $this->user_service->find((int) $tree->getPreference('WEBMASTER_USER_ID')),
+            $this->user_service->find($tree->contactUserId()),
+            $this->user_service->find($tree->supportUserId()),
         ];
 
         return array_filter($contacts);
