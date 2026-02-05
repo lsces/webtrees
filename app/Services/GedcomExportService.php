@@ -251,9 +251,17 @@ class GedcomExportService
                             }
 
                             if ($zip_filesystem instanceof ZipArchive) {
-                                $zip_filesystem->addFromString($media_path . $media_file, $media_filesystem->read($media_file));
-                                // Media files are (almost always) already compressed.
+                                $tmpfile = tempnam(sys_get_temp_dir(), 'wt-zip-');
+                                $src = $media_filesystem->readStream($media_file);
+                                $dst = fopen($tmpfile, 'wb+');
+                                stream_copy_to_stream($src, $dst);
+
+                                $zip_filesystem->addFile($tmpfile, $media_path . $media_file);
+                                // Media files are (almost always) already compressed.  Don't recompress them.
                                 $zip_filesystem->setCompressionName($media_path . $media_file, ZipArchive::CM_STORE);
+
+                                fclose($src);
+                                fclose($dst);
                             }
                         }
                     }
