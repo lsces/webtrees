@@ -79,4 +79,14 @@ class LanguageArabic extends AbstractModule implements ModuleLanguageInterface
     {
         return new LocaleAr();
     }
+
+    protected function normalizeExceptions(): array
+    {
+        // Issue #5262 - the INTL library doesn't convert these.
+        return [
+            UTF8::ARABIC_LETTER_TEH_MARBUTA  => UTF8::ARABIC_LETTER_TEH,
+            UTF8::ARABIC_LETTER_ALEF_MAKSURA => UTF8::ARABIC_LETTER_YEH,
+            UTF8::ARABIC_LETTER_ALEF_WASLA   => UTF8::ARABIC_LETTER_ALEF,
+        ];
+    }
 }

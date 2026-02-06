@@ -511,6 +511,7 @@ class UTF8 extends AbstractEncoding
     public const string ARABIC_LETTER_WAW                                     = "\u{0648}";
     public const string ARABIC_LETTER_ALEF_MAKSURA                            = "\u{0649}";
     public const string ARABIC_LETTER_YEH                                     = "\u{064A}";
+    public const string ARABIC_LETTER_ALEF_WASLA                              = "\u{0671}";
     public const string LATIN_CAPITAL_LETTER_A_WITH_RING_BELOW                = "\u{1E00}";
     public const string LATIN_SMALL_LETTER_A_WITH_RING_BELOW                  = "\u{1E01}";
     public const string LATIN_CAPITAL_LETTER_B_WITH_DOT_ABOVE                 = "\u{1E02}";
