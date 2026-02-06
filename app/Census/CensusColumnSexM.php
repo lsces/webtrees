@@ -21,33 +21,13 @@ namespace Fisharebest\Webtrees\Census;
 
 use Fisharebest\Webtrees\Individual;
 
-/**
- * The individual's sex Male?
- */
-class CensusColumnSexM extends AbstractCensusColumn implements CensusColumnInterface
+final readonly class CensusColumnSexM extends AbstractCensusColumn implements CensusColumnInterface
 {
-    protected const string MALE = 'M';
-
-    protected const string FEMALE = 'F';
-
-    protected const string X = 'X';
-
-    /**
-     * Generate the likely value of this census column, based on available information.
-     * X is the value returned for this column as it is a selection of F column or M
-     * column.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
-        if ($individual->sex() === 'M') {
-            return static::X;
-        }
-
-        return '';
+        return match ($individual->sex()) {
+            'M'     => 'X',
+            default => '',
+        };
     }
 }

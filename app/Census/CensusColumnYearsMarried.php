@@ -24,19 +24,8 @@ use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 
-/**
- * For how many years has the individual been married.
- */
-class CensusColumnYearsMarried extends AbstractCensusColumn implements CensusColumnInterface
+final readonly class CensusColumnYearsMarried extends AbstractCensusColumn implements CensusColumnInterface
 {
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
         $marriage_date = null;

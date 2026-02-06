@@ -22,10 +22,7 @@ namespace Fisharebest\Webtrees\Census;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\Individual;
 
-/**
- * The nationality of the individual.
- */
-class CensusColumnNationality extends AbstractCensusColumn implements CensusColumnInterface
+final readonly class CensusColumnNationality extends AbstractCensusColumn implements CensusColumnInterface
 {
     // Convert a country name to a nationality
     private const array NATIONALITIES = [
@@ -36,14 +33,6 @@ class CensusColumnNationality extends AbstractCensusColumn implements CensusColu
         'Canada'      => 'Canadian',
     ];
 
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
         $place = $individual->getBirthPlace()->gedcomName();
@@ -53,7 +42,7 @@ class CensusColumnNationality extends AbstractCensusColumn implements CensusColu
             $place = $this->place();
         }
 
-        // Did we emigrate or naturalise?
+        // Did we emigrate or naturalize?
         foreach ($individual->facts(['IMMI', 'EMIG', 'NATU'], true) as $fact) {
             if (Date::compare($fact->date(), $this->date()) <= 0) {
                 $place = $fact->place()->gedcomName();

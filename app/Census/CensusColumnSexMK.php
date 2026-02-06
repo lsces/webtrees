@@ -19,10 +19,16 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * The individual's sex.
- */
-class CensusColumnSexMK extends CensusColumnSexMF
+use Fisharebest\Webtrees\Individual;
+
+final readonly class CensusColumnSexMK extends AbstractCensusColumn implements CensusColumnInterface
 {
-    protected const string FEMALE = 'K';
+    public function generate(Individual $individual, Individual $head): string
+    {
+        return match ($individual->sex()) {
+            'M'     => 'M',
+            'F'     => 'K',
+            default => '',
+        };
+    }
 }

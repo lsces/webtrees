@@ -19,6 +19,7 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
+use Fisharebest\Webtrees\Encodings\UTF8;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -48,7 +49,7 @@ class CensusColumnSexMZTest extends TestCase
 
         $column = new CensusColumnSexMZ($census, '', '');
 
-        self::assertSame('Ž', $column->generate($individual, $individual));
+        self::assertSame(UTF8::LATIN_CAPITAL_LETTER_Z_WITH_CARON, $column->generate($individual, $individual));
     }
 
     public function testUnknownSex(): void

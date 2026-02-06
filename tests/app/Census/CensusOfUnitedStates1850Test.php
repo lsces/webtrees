@@ -46,7 +46,7 @@ class CensusOfUnitedStates1850Test extends TestCase
         self::assertInstanceOf(CensusColumnNull::class, $columns[3]);
         self::assertInstanceOf(CensusColumnOccupation::class, $columns[4]);
         self::assertInstanceOf(CensusColumnNull::class, $columns[5]);
-        self::assertInstanceOf(CensusColumnBirthPlace::class, $columns[6]);
+        self::assertInstanceOf(CensusColumnBirthPlaceSimple::class, $columns[6]);
         self::assertInstanceOf(CensusColumnMarriedWithinYear::class, $columns[7]);
         self::assertInstanceOf(CensusColumnNull::class, $columns[8]);
         self::assertInstanceOf(CensusColumnNull::class, $columns[9]);

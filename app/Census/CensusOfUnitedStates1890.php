@@ -19,25 +19,15 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * Definitions for a census
- */
-class CensusOfUnitedStates1890 extends CensusOfUnitedStates implements CensusInterface
+readonly class CensusOfUnitedStates1890 extends CensusOfUnitedStates implements CensusInterface
 {
-    /**
-     * When did this census occur.
-     *
-     * @return string
-     */
     public function censusDate(): string
     {
         return '02 JUN 1890';
     }
 
     /**
-     * The columns of the census.
-     *
-     * @return array<CensusColumnInterface>
+     * @return list<CensusColumnInterface>
      */
     public function columns(): array
     {

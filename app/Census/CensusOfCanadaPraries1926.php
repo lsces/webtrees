@@ -19,25 +19,15 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * Definitions for a census
- */
-class CensusOfCanadaPraries1926 extends CensusOfCanada implements CensusInterface
+readonly class CensusOfCanadaPraries1926 extends CensusOfCanada implements CensusInterface
 {
-    /**
-     * When did this census occur.
-     *
-     * @return string
-     */
     public function censusDate(): string
     {
         return '01 JUN 1926';
     }
 
     /**
-     * The columns of the census.
-     *
-     * @return array<CensusColumnInterface>
+     * @return list<CensusColumnInterface>
      */
     public function columns(): array
     {

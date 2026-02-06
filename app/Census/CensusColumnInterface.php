@@ -27,41 +27,9 @@ use Fisharebest\Webtrees\Individual;
  */
 interface CensusColumnInterface
 {
-    /**
-     * A short version of the column's name.
-     *
-     * @return string
-     */
+    public function title(): string;
+
     public function abbreviation(): string;
 
-    /**
-     * When did this census occur
-     *
-     * @return Date
-     */
-    public function date(): Date;
-
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string;
-
-    /**
-     * Where did this census occur
-     *
-     * @return string
-     */
-    public function place(): string;
-
-    /**
-     * The full version of the column's name.
-     *
-     * @return string
-     */
-    public function title(): string;
 }

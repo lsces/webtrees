@@ -19,25 +19,15 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * Definitions for a census
- */
-class CensusOfFrance1851 extends CensusOfFrance implements CensusInterface
+readonly class CensusOfFrance1851 extends CensusOfFrance implements CensusInterface
 {
-    /**
-     * When did this census occur.
-     *
-     * @return string
-     */
     public function censusDate(): string
     {
         return '16 JAN 1851';
     }
 
     /**
-     * The columns of the census.
-     *
-     * @return array<CensusColumnInterface>
+     * @return list<CensusColumnInterface>
      */
     public function columns(): array
     {

@@ -22,19 +22,8 @@ namespace Fisharebest\Webtrees\Census;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 
-/**
- * The individual's full name.
- */
-class CensusColumnSurnameGivenNames extends AbstractCensusColumn implements CensusColumnInterface
+final readonly class CensusColumnSurnameGivenNames extends AbstractCensusColumn implements CensusColumnInterface
 {
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
         $name        = $this->nameAtCensusDate($individual);

@@ -19,38 +19,16 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * Marital status.
- */
-class CensusColumnConditionCanadaMarriedSingle extends AbstractCensusColumnCondition
+final readonly class CensusColumnConditionCanadaMarriedSingle extends AbstractCensusColumnCondition
 {
-    // Text to display for married males
     protected const string HUSBAND = 'M';
-
-    // Text to display for married females
     protected const string WIFE = 'M';
-
-    // Text to display for married unmarried males
     protected const string BACHELOR = 'S';
-
-    // Text to display for married unmarried females
     protected const string SPINSTER = 'S';
-
-    // Text to display for male children
     protected const string BOY = 'S';
-
-    // Text to display for female children
     protected const string GIRL = 'S';
-
-    // Text to display for divorced males
     protected const string DIVORCE = '';
-
-    // Text to display for divorced females
     protected const string DIVORCEE = '';
-
-    // Text to display for widowed males
     protected const string WIDOWER = '';
-
-    // Text to display for widowed females
     protected const string WIDOW = '';
 }

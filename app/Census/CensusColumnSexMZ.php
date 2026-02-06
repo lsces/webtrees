@@ -19,10 +19,17 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * The individual's sex.
- */
-class CensusColumnSexMZ extends CensusColumnSexMF
+use Fisharebest\Webtrees\Encodings\UTF8;
+use Fisharebest\Webtrees\Individual;
+
+final readonly class CensusColumnSexMZ extends AbstractCensusColumn implements CensusColumnInterface
 {
-    protected const string FEMALE = 'Ž';
+    public function generate(Individual $individual, Individual $head): string
+    {
+        return match ($individual->sex()) {
+            'M'     => 'M',
+            'F'     => UTF8::LATIN_CAPITAL_LETTER_Z_WITH_CARON,
+            default => '',
+        };
+    }
 }

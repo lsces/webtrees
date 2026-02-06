@@ -19,15 +19,12 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * Definitions for a census
- */
-class CensusOfUnitedStates extends Census implements CensusPlaceInterface
+readonly class CensusOfUnitedStates implements CensusPlaceInterface
 {
     /**
      * All available censuses for this census place.
      *
-     * @return array<CensusInterface>
+     * @return list<CensusInterface>
      */
     public function allCensusDates(): array
     {
@@ -52,21 +49,11 @@ class CensusOfUnitedStates extends Census implements CensusPlaceInterface
         ];
     }
 
-    /**
-     * Where did this census occur, in GEDCOM format.
-     *
-     * @return string
-     */
     public function censusPlace(): string
     {
         return 'United States';
     }
 
-    /**
-     * In which language was this census written.
-     *
-     * @return string
-     */
     public function censusLanguage(): string
     {
         return 'en-US';

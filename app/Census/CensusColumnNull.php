@@ -21,21 +21,11 @@ namespace Fisharebest\Webtrees\Census;
 
 use Fisharebest\Webtrees\Individual;
 
-/**
- * A column that we cannot generate.
- */
-class CensusColumnNull extends AbstractCensusColumn implements CensusColumnInterface
+final readonly class CensusColumnNull extends AbstractCensusColumn implements CensusColumnInterface
 {
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
+        // This is a column that we cannot generate from data we might already have.
         return '';
     }
 }

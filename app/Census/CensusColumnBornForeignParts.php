@@ -21,19 +21,8 @@ namespace Fisharebest\Webtrees\Census;
 
 use Fisharebest\Webtrees\Individual;
 
-/**
- * Was the individual born in "foreign parts".
- */
-class CensusColumnBornForeignParts extends AbstractCensusColumn implements CensusColumnInterface
+final readonly class CensusColumnBornForeignParts extends AbstractCensusColumn implements CensusColumnInterface
 {
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
         $birth_place  = (string) $individual->getBirthPlace()->lastParts(1)->first();

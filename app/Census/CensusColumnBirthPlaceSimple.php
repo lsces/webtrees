@@ -21,21 +21,22 @@ namespace Fisharebest\Webtrees\Census;
 
 use Fisharebest\Webtrees\Individual;
 
-/**
- * The individual's birth place.
- */
-class CensusColumnBirthPlaceSimple extends CensusColumnBirthPlace
+final readonly class CensusColumnBirthPlaceSimple extends AbstractCensusColumn implements CensusColumnInterface
 {
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
-        return $this->lastPartOfPlace(parent::generate($individual, $head));
+        $birth_place  = $individual->getBirthPlace()->gedcomName();
+        $census_place = $this->place();
+
+        // Ignore the census country
+        if ($birth_place === $census_place) {
+            return '';
+        }
+
+        if (substr($birth_place, -strlen($census_place) - 2) === ', ' . $census_place) {
+            $birth_place = substr($birth_place, 0, -strlen($census_place) - 2);
+        }
+
+        return $this->lastPartOfPlace($birth_place);
     }
 }

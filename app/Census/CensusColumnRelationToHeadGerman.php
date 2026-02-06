@@ -19,10 +19,19 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * Relationship to head of household.
- */
-class CensusColumnRelationToHeadGerman extends CensusColumnRelationToHead
+use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Registry;
+use Fisharebest\Webtrees\Services\RelationshipService;
+
+final readonly class CensusColumnRelationToHeadGerman extends AbstractCensusColumn implements CensusColumnInterface
 {
-    protected const string HEAD_OF_HOUSEHOLD = 'Haushaltungsvorstand';
+    public function generate(Individual $individual, Individual $head): string
+    {
+        if ($individual === $head) {
+            return 'Haushaltungsvorstand';
+        }
+
+        return Registry::container()->get(RelationshipService::class)
+            ->getCloseRelationshipName($head, $individual);
+    }
 }

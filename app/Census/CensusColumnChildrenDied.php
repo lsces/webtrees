@@ -22,19 +22,8 @@ namespace Fisharebest\Webtrees\Census;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\Individual;
 
-/**
- * The number of children who have died.
- */
-class CensusColumnChildrenDied extends AbstractCensusColumn implements CensusColumnInterface
+final readonly class CensusColumnChildrenDied extends AbstractCensusColumn implements CensusColumnInterface
 {
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
         $family = $this->spouseFamily($individual);

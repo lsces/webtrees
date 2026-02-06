@@ -19,35 +19,20 @@ declare(strict_types=1);
 
 namespace Fisharebest\Webtrees\Census;
 
-/**
- * Definitions for a census
- */
-class CensusOfDeutschland1867 extends CensusOfDeutschland implements CensusInterface
+readonly class CensusOfDeutschland1867 extends CensusOfDeutschland implements CensusInterface
 {
-    /**
-     * When did this census occur.
-     *
-     * @return string
-     */
     public function censusDate(): string
     {
         return '03 DEC 1867';
     }
 
-    /**
-     * Where did this census occur, in GEDCOM format.
-     *
-     * @return string
-     */
     public function censusPlace(): string
     {
         return 'Mecklenburg-Schwerin, Deutschland';
     }
 
     /**
-     * The columns of the census.
-     *
-     * @return array<CensusColumnInterface>
+     * @return list<CensusColumnInterface>
      */
     public function columns(): array
     {

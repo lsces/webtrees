@@ -23,19 +23,8 @@ use Fisharebest\Webtrees\Individual;
 
 use function strlen;
 
-/**
- * The individual's birth place.
- */
-class CensusColumnBirthPlace extends AbstractCensusColumn implements CensusColumnInterface
+final readonly class CensusColumnBirthPlace extends AbstractCensusColumn implements CensusColumnInterface
 {
-    /**
-     * Generate the likely value of this census column, based on available information.
-     *
-     * @param Individual $individual
-     * @param Individual $head
-     *
-     * @return string
-     */
     public function generate(Individual $individual, Individual $head): string
     {
         $birth_place  = $individual->getBirthPlace()->gedcomName();
