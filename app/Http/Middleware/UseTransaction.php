@@ -25,20 +25,11 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Middleware to wrap a request in a transaction.
- */
 class UseTransaction implements MiddlewareInterface
 {
     // If a transaction deadlock occurs, try again.
     private const int DEADLOCK_RETRY_ATTEMPTS = 3;
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         DB::connection()->transaction(static function () use ($request, $handler, &$response): void {

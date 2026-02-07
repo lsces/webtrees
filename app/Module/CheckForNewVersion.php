@@ -66,12 +66,6 @@ class CheckForNewVersion extends AbstractModule implements MiddlewareInterface
         return I18N::translate('Send an email to all administrators when an upgrade is available.');
     }
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($this->upgrade_service->isUpgradeAvailable()) {

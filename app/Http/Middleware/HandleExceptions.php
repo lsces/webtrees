@@ -49,9 +49,6 @@ use function view;
 use const E_ERROR;
 use const PHP_EOL;
 
-/**
- * Middleware to handle and render errors.
- */
 class HandleExceptions implements MiddlewareInterface, StatusCodeInterface
 {
     use ViewResponseTrait;

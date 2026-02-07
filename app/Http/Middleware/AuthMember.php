@@ -33,17 +33,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function redirect;
 use function route;
 
-/**
- * Middleware to restrict access to editors.
- */
 class AuthMember implements MiddlewareInterface
 {
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $tree = Validator::attributes($request)->tree();

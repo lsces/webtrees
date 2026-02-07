@@ -29,9 +29,6 @@ use Psr\Http\Server\RequestHandlerInterface;
 use function file_exists;
 use function parse_ini_file;
 
-/**
- * Middleware to read (or create) the webtrees configuration file.
- */
 class ReadConfigIni implements MiddlewareInterface
 {
     private SetupWizard $setup_wizard;
@@ -44,12 +41,6 @@ class ReadConfigIni implements MiddlewareInterface
         $this->setup_wizard = $setup_wizard;
     }
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Read the configuration settings.

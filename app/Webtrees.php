@@ -67,6 +67,7 @@ use Fisharebest\Webtrees\Http\Middleware\ReadConfigIni;
 use Fisharebest\Webtrees\Http\Middleware\RegisterGedcomTags;
 use Fisharebest\Webtrees\Http\Middleware\Router;
 use Fisharebest\Webtrees\Http\Middleware\SecurityHeaders;
+use Fisharebest\Webtrees\Http\Middleware\DebugLogger;
 use Fisharebest\Webtrees\Http\Middleware\UpdateDatabaseSchema;
 use Fisharebest\Webtrees\Http\Middleware\UseDatabase;
 use Fisharebest\Webtrees\Http\Middleware\UseLanguage;
@@ -159,6 +160,7 @@ class Webtrees
         CompressResponse::class,
         BadBotBlocker::class,
         UseDatabase::class,
+        DebugLogger::class,
         UpdateDatabaseSchema::class,
         UseSession::class,
         UseLanguage::class,

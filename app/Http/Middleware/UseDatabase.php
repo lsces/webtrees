@@ -26,17 +26,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Middleware to connect to the database.
- */
 class UseDatabase implements MiddlewareInterface
 {
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         DB::connect(
@@ -53,42 +44,6 @@ class UseDatabase implements MiddlewareInterface
             verify_certificate: Validator::attributes($request)->boolean('dbverify', false),
         );
 
-        $debug = Validator::attributes($request)->boolean('debug', false);
-
-        if (!$debug) {
-            return $handler->handle($request);
-        }
-
-        // Log SQL queries in response headers
-        DB::connection()->enableQueryLog();
-        $response = $handler->handle($request);
-        $queries  = DB::connection()->getQueryLog();
-        $slowest  = max(array_column($queries, 'time'));
-        $total    = array_sum(array_column($queries, 'time'));
-        $message  = sprintf('Queries: %d, slowest: %.3f ms, total: %.3f ms', count($queries), $slowest, $total);
-        $response = $response->withAddedHeader('x-debug-sql', $message);
-
-        foreach ($queries as $query) {
-            $sql      = $query['query'];
-            $time     = $query['time'];
-            $bindings = $query['bindings'];
-            foreach ($bindings as $binding) {
-                if (is_string($binding)) {
-                    if (mb_strlen($binding) > 10) {
-                        $binding = mb_substr($binding, 0, 9) . '...';
-                    }
-
-                    $binding = "'" . $binding . "'";
-                } else {
-                    $binding = (string) $binding;
-                }
-
-                $sql = preg_replace('/\?/', $binding, $sql, 1);
-            }
-            $message  = sprintf('%s (%.3f ms)', $sql, $time);
-            $response = $response->withAddedHeader('x-debug-sql', $message);
-        }
-
-        return $response;
+        return $handler->handle($request);
     }
 }

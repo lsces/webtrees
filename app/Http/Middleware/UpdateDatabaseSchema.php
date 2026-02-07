@@ -26,9 +26,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Middleware to update the database automatically, after an upgrade.
- */
 class UpdateDatabaseSchema implements MiddlewareInterface
 {
     private MigrationService $migration_service;

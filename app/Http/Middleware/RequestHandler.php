@@ -28,17 +28,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function is_string;
 
-/**
- * Middleware to run a request-handler.
- */
 class RequestHandler implements MiddlewareInterface
 {
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = Validator::attributes($request)->route();

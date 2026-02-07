@@ -25,9 +25,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Middleware to set security-related HTTP headers.
- */
 class SecurityHeaders implements MiddlewareInterface
 {
     private const array SECURITY_HEADERS = [
@@ -38,12 +35,6 @@ class SecurityHeaders implements MiddlewareInterface
         'X-XSS-Protection'       => '1; mode=block',
     ];
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);

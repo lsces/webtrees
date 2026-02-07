@@ -35,9 +35,6 @@ use function strstr;
 use function strtolower;
 use function strtr;
 
-/**
- * Middleware to compress (gzip or deflate) a response.
- */
 class CompressResponse implements MiddlewareInterface
 {
     // Non-text responses that will benefit from compression.
@@ -54,12 +51,6 @@ class CompressResponse implements MiddlewareInterface
     {
     }
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $response = $handler->handle($request);

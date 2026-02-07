@@ -26,9 +26,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Middleware to check if a new version of webtrees is available.
- */
 class CheckForNewVersion implements MiddlewareInterface
 {
     private UpgradeService $upgrade_service;
@@ -41,12 +38,6 @@ class CheckForNewVersion implements MiddlewareInterface
         $this->upgrade_service = $upgrade_service;
     }
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Only run on full page requests.

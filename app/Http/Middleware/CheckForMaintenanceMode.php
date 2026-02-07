@@ -27,9 +27,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Middleware to check whether the site is offline.
- */
 readonly class CheckForMaintenanceMode implements MiddlewareInterface, StatusCodeInterface
 {
     public function __construct(

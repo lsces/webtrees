@@ -26,9 +26,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Middleware to bootstrap the modules.
- */
 class BootModules implements MiddlewareInterface
 {
     private ModuleService $module_service;
@@ -45,12 +42,6 @@ class BootModules implements MiddlewareInterface
         $this->theme          = $theme;
     }
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $this->module_service->bootModules($this->theme);

@@ -43,9 +43,6 @@ use function response;
 use function str_contains;
 use function str_ends_with;
 
-/**
- * Middleware to block bad robots before they waste our valuable CPU cycles.
- */
 class BadBotBlocker implements MiddlewareInterface
 {
     public const string ROBOT_ATTRIBUTE_NAME = 'is-a-robot';

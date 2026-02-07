@@ -25,17 +25,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function explode;
 
-/**
- * Middleware to detect the client's IP address.
- */
 class ClientIp extends \Middlewares\ClientIp
 {
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // The configuration comes from config.ini.php, via request attributes.

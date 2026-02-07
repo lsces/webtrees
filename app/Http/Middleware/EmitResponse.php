@@ -38,9 +38,6 @@ use function sprintf;
 
 use const CONNECTION_NORMAL;
 
-/**
- * Middleware to emit the response - send it back to the webserver.
- */
 class EmitResponse implements MiddlewareInterface
 {
     // Stream the output in chunks.

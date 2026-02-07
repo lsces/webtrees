@@ -27,17 +27,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function response;
 
-/**
- * Middleware to deny access to robots.
- */
 class AuthNotRobot implements MiddlewareInterface
 {
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         if ($request->getAttribute(BadBotBlocker::ROBOT_ATTRIBUTE_NAME) !== null) {

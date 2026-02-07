@@ -33,9 +33,6 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/**
- * Middleware to select a language.
- */
 class UseLanguage implements MiddlewareInterface
 {
     private ModuleService $module_service;
@@ -48,12 +45,6 @@ class UseLanguage implements MiddlewareInterface
         $this->module_service = $module_service;
     }
 
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         foreach ($this->languages($request) as $language) {

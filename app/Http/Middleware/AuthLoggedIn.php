@@ -29,17 +29,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 use function redirect;
 
-/**
- * Middleware to restrict access to logged-in users.
- */
 class AuthLoggedIn implements MiddlewareInterface
 {
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $tree = Validator::attributes($request)->treeOptional();

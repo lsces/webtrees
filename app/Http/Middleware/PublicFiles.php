@@ -36,9 +36,6 @@ use function strtoupper;
 
 use const PATHINFO_EXTENSION;
 
-/**
- * Provide access to files in the folder /public, for cli-server requests and in case the web-server doesn't do this.
- */
 class PublicFiles implements MiddlewareInterface
 {
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

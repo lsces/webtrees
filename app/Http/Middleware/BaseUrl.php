@@ -34,17 +34,8 @@ use const PHP_URL_PATH;
 use const PHP_URL_PORT;
 use const PHP_URL_SCHEME;
 
-/**
- * Middleware to set the base URL.
- */
 class BaseUrl implements MiddlewareInterface
 {
-    /**
-     * @param ServerRequestInterface  $request
-     * @param RequestHandlerInterface $handler
-     *
-     * @return ResponseInterface
-     */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // The request URL, as auto-detected from the environment.

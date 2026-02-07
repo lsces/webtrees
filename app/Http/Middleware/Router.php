@@ -39,9 +39,6 @@ use function explode;
 use function implode;
 use function str_contains;
 
-/**
- * Simple class to help migrate to a third-party routing library.
- */
 readonly class Router implements MiddlewareInterface
 {
     public function __construct(
