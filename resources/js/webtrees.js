@@ -935,13 +935,11 @@ $(function () {
       });
     });
 
-  // Datatables - locale aware sorting
-  $.fn.dataTableExt.oSort['text-asc'] = function (x, y) {
-    return x.localeCompare(y, document.documentElement.lang, { sensitivity: 'base' });
-  };
-  $.fn.dataTableExt.oSort['text-desc'] = function (x, y) {
-    return y.localeCompare(x, document.documentElement.lang, { sensitivity: 'base' });
-  };
+  // Datatables - locale-aware sorting
+  jQuery.extend(jQuery.fn.dataTable.ext.oSort, {
+    'text-asc': (x, y) => x.localeCompare(y, document.documentElement.lang, { sensitivity: 'base' }),
+    'text-desc': (x, y) => y.localeCompare(x, document.documentElement.lang, { sensitivity: 'base' }),
+  });
 
   // DataTables - start hidden to prevent FOUC.
   document.querySelectorAll('table.datatables').forEach(function (element) {
