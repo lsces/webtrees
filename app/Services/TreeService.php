@@ -219,6 +219,8 @@ class TreeService
             'imported' => 0,
         ]);
 
+        DB::table('gedcom_chunk')->where('gedcom_id', '=', $tree->id())->delete();
+
         $stream = $stream->detach();
 
         // Convert to UTF-8.
@@ -279,7 +281,6 @@ class TreeService
         DB::table('module_privacy')->where('gedcom_id', '=', $tree->id())->delete();
         DB::table('hit_counter')->where('gedcom_id', '=', $tree->id())->delete();
         DB::table('default_resn')->where('gedcom_id', '=', $tree->id())->delete();
-        DB::table('gedcom_chunk')->where('gedcom_id', '=', $tree->id())->delete();
         DB::table('log')->where('gedcom_id', '=', $tree->id())->delete();
         DB::table('gedcom')->where('gedcom_id', '=', $tree->id())->delete();
     }
