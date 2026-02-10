@@ -123,7 +123,7 @@ class Statistics {
       this.callbacks.push(callback);
     }
 
-    $(window).resize(function () {
+    window.addEventListener('resize', function () {
       callback();
     });
   }
