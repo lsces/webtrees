@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Fisharebest\Webtrees\Cli\Commands;
 
 use InvalidArgumentException;
+use LogicException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 
@@ -28,6 +29,15 @@ use function is_string;
 
 abstract class AbstractCommand extends Command
 {
+    public function __construct()
+    {
+        if (PHP_SAPI !== 'cli') {
+            throw new LogicException('Commands can only run from the command line.');
+        }
+
+        parent::__construct();
+    }
+
     protected function boolOption(InputInterface $input, string $name): bool
     {
         $value = $input->getOption(name: $name);
