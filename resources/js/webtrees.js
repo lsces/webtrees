@@ -56,6 +56,56 @@
   }
 
   /**
+   * Simple replacement for jQuery().load() - fetch HTML, insert into an element, and execute and scripts.
+   *
+   * @param {element} element
+   * @param {string} url
+   * @param {object|null} data
+   */
+  webtrees.load = function (element, url, data = null) {
+    const csrfToken = document.head.querySelector('meta[name=csrf]').getAttribute('content');
+
+    const options = {
+      body: data,
+      method: data === null ? 'GET' : 'POST',
+      headers: new Headers({
+        'accept': 'text/html',
+        'x-requested-with': 'XMLHttpRequest',
+        'x-csrf-token': csrfToken,
+      }),
+    };
+
+    fetch(url, options)
+      .then(response => {
+        return response.text();
+      })
+      .then(html => {
+        element.innerHTML = html;
+
+        // Parse into a document fragment
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+
+        // Append script elements to the end of the body.
+        Array.from(doc.body.childNodes).forEach(node => {
+          if (node.tagName === "SCRIPT") {
+            let script = document.createElement('script');// Copy attributes (src, type, etc.)
+            Array.from(node.attributes).forEach(attr => {
+              script.setAttribute(attr.name, attr.value);
+            });
+            if (node.src) {
+              script.src = node.src;
+            } else {
+              script.textContent = node.textContent;
+            }
+            node.remove();
+            document.body.appendChild(script);
+          }
+        });
+      });
+  }
+
+  /**
    * Simple wrapper around fetch() with our preferred headers
    *
    * @param {string} url
@@ -914,11 +964,11 @@ $.ajaxSetup({
 /**
  * Initialisation
  */
-$(function () {
+document.addEventListener('DOMContentLoaded', function() {
   // Page elements that load automatically via AJAX.
   // This prevents bad robots from crawling resource-intensive pages.
-  $('[data-wt-ajax-url]').each(function () {
-    $(this).load(this.dataset.wtAjaxUrl);
+  document.querySelectorAll('[data-wt-ajax-url]').forEach(function (element) {
+    webtrees.load(element, element.dataset.wtAjaxUrl);
   });
 
   // Autocomplete
