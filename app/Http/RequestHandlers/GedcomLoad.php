@@ -77,6 +77,9 @@ final class GedcomLoad implements RequestHandlerInterface
                 ->where('gedcom_id', '=', $tree->id())
                 ->count();
 
+            // Calculate progress so far
+            $progress = $import_offset / $import_total;
+
             // Finished?
             if ($import_offset === $import_total) {
                 if (!$tree->imported()) {
@@ -128,9 +131,6 @@ final class GedcomLoad implements RequestHandlerInterface
                     }
                 }
             }
-
-            // Calculate progress so far
-            $progress = $import_offset / $import_total;
 
             $first_time = $import_offset === 0;
 
