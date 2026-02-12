@@ -51,6 +51,8 @@ class DebugLogger implements MiddlewareInterface
         $message  = sprintf('Queries: %d, slowest: %.3f ms, total: %.3f ms', count($queries), $slowest, $total);
         $response = $response->withAddedHeader('x-debug-sql', $message);
 
+        $queries = array_slice($queries, 0, 1000); // Too many headers will break nginx/apache
+
         foreach ($queries as $query) {
             $sql      = $query['query'];
             $time     = $query['time'];
