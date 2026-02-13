@@ -123,21 +123,6 @@ class Tree
     }
 
     /**
-     * @return Closure(object):Tree
-     */
-    public static function rowMapper(): Closure
-    {
-        trigger_error('Deprecated since 2.2.6 - use Tree::fromDB()');
-
-        return static fn (object $row): Closure => DB::table(table: 'gedcom')
-            ->where(column: 'gedcom_id', operator: '=', value: $row->tree_id)
-            ->select()
-            ->get()
-            ->map(callback: self::fromDB(...))
-            ->first();
-    }
-
-    /**
      * @param object{
      *     gedcom_id:string|int,
      *     gedcom_name:string,
