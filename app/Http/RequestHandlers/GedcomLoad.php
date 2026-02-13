@@ -116,15 +116,16 @@ final class GedcomLoad implements RequestHandlerInterface
                 }
 
                 foreach ($queries as $table => $query) {
-                    // take() and delete() together don't return the number of delete rows.
-                    while ((clone $query)->count() > 0) {
-                        (clone $query)->take(1000)->delete();
+                    $count = (clone $query)->count();
+
+                    while ($count > 0) {
+                        $count -= (clone $query)->take(10000)->delete();
 
                         if ($this->timeout_service->isTimeLimitUp()) {
                             return $this->viewResponse('admin/import-progress', [
                                 'errors'   => '',
                                 'progress' => 0.0,
-                                'status'   => I18N::translate('Deleting…') . ' ' . $table,
+                                'status'   => I18N::translate('Deleting…') . ' ' . $table . ' (' . $count . ')',
                                 'tree'     => $tree,
                             ]);
                         }
