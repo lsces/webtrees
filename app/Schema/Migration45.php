@@ -39,7 +39,7 @@ final readonly class Migration45 implements MigrationInterface
         DB::table(table: 'media_file')->update(values: [
             'source_media_type' => new Expression(value: 'UPPER(source_media_type)'),
         ]);
-
+/*
         if (!DB::schema()->hasColumn(table: 'gedcom', column: 'media_folder')) {
             DB::schema()->table(table: 'gedcom', callback: function (Blueprint $table): void {
                 $table->string(column: 'media_folder', length: 255)->default(value: 'media/')->index();
@@ -90,6 +90,7 @@ final readonly class Migration45 implements MigrationInterface
             ->whereIn(column: 'setting_name', values: array_keys($new_columns))
             ->delete();
 
+*/
         // Old setting, no longer used.
         DB::table(table: 'gedcom_setting')
             ->whereIn(column: 'setting_name', values: ['LANGUAGE'])
