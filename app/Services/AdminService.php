@@ -157,8 +157,8 @@ class AdminService
 
         $families = DB::table('families')
             ->where('f_file', '=', $tree->id())
-            ->groupBy([new Expression('LEAST(f_husb, f_wife)')])
-            ->groupBy([new Expression('GREATEST(f_husb, f_wife)')])
+            ->groupBy([new Expression('MINVALUE(f_husb, f_wife)')])
+            ->groupBy([new Expression('MAXVALUE(f_husb, f_wife)')])
             ->having(new Expression('COUNT(f_id)'), '>', '1')
             ->select([new Expression(DB::groupConcat('f_id') . ' AS xrefs')])
             ->orderBy('xrefs')
