@@ -36,6 +36,7 @@ final class DB extends Manager
     public const string POSTGRES   = 'pgsql';
     public const string SQLITE     = 'sqlite';
     public const string SQL_SERVER = 'sqlsrv';
+    public const string FIREBIRD = 'firebird';
 
     // For databases that support it, ASCII gives faster indexes
     private const array COLLATION_ASCII = [
@@ -44,6 +45,7 @@ final class DB extends Manager
         self::POSTGRES   => 'C',
         self::SQLITE     => 'BINARY',
         self::SQL_SERVER => 'Latin1_General_Bin',
+        self::FIREBIRD   => 'C',
     ];
 
     // MySQL 5.x uses utf8mb4_unicode_ci (Unicode 4.0) for utf8mb4
@@ -57,6 +59,7 @@ final class DB extends Manager
         self::POSTGRES   => null,
         self::SQLITE     => null,
         self::SQL_SERVER => null,
+        self::FIREBIRD   => 'UTF8',
     ];
 
     // Case-insensitive, accent-insensitive.  Default for MySQL and MariaDB
@@ -66,6 +69,7 @@ final class DB extends Manager
         self::POSTGRES   => null, // Need to create a custom ci/ai collation, e.g. icu_und_webtrees_ci_ai
         self::SQLITE     => 'NOCASE',
         self::SQL_SERVER => 'Latin1_General_100_CI_AI_UTF8', // Yes, UTF8 collations are called "Latin1..."
+        self::FIREBIRD   => null,
     ];
 
     // Case-sensitive, accent-sensitive.  Default for Postgres, SQLite and SqlServer
@@ -75,6 +79,7 @@ final class DB extends Manager
         self::POSTGRES   => 'und-x-icu',
         self::SQLITE     => null,
         self::SQL_SERVER => 'Latin1_General_100_BIN2_UTF8',
+        self::FIREBIRD   => 'UTF8',
     ];
 
     private const array REGEX_OPERATOR = [
@@ -83,6 +88,7 @@ final class DB extends Manager
         self::POSTGRES   => '~',
         self::SQLITE     => 'REGEXP',
         self::SQL_SERVER => 'REGEXP',
+        self::FIREBIRD   => '~',
     ];
 
     private const array GROUP_CONCAT_FUNCTION = [
@@ -91,7 +97,8 @@ final class DB extends Manager
         self::POSTGRES   => "STRING_AGG(%s, ',')",
         self::SQLITE     => 'GROUP_CONCAT(%s)',
         self::SQL_SERVER => "STRING_AGG(%s, ',')",
-    ];
+        self::FIREBIRD   => "LIST(%s)",
+     ];
 
     private const array DRIVER_INITIALIZATION = [
         self::MARIADB    => "SET NAMES utf8mb4, sql_mode := 'ANSI,STRICT_ALL_TABLES', TIME_ZONE := '+00:00', SQL_BIG_SELECTS := 1, GROUP_CONCAT_MAX_LEN := 1048576",
@@ -99,6 +106,7 @@ final class DB extends Manager
         self::POSTGRES   => '',
         self::SQLITE     => 'PRAGMA foreign_keys = ON',
         self::SQL_SERVER => 'SET language us_english', // For timestamp columns
+        self::FIREBIRD   => '',
     ];
 
     public static function connect(
@@ -186,7 +194,14 @@ final class DB extends Manager
 
     public static function lastInsertId(): int
     {
-        $return = self::pdo()->lastInsertId();
+        if (self::driverName() != self::FIREBIRD) {
+            $return = self::pdo()->lastInsertId();
+        } else {
+			// Get the connection instance and access its lastInsertId property
+			$connection = self::connection(); // Get the connection instance
+        	$return = $connection->getLastInsertId();
+		}
+		        
 
         if ($return === false) {
             throw new RuntimeException('Unable to retrieve last insert ID');
