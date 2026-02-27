@@ -232,7 +232,7 @@ class MapDataService
         }
 
         return $query
-            ->groupBy(['p0.id'])
+            ->groupBy(['p0.id', 'p0.parent_id', 'p0.place', 'p0.latitude', 'p0.longitude'])
             ->select([
                 'p0.*',
                 new Expression('COUNT(' . DB::prefix('p1') . '.id) AS child_count'),
