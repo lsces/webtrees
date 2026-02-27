@@ -32,8 +32,12 @@ class Migration37 implements MigrationInterface
     public function upgrade(): void
     {
         // These tables were created by webtrees 1.x, and may not exist if we first installed webtrees 2.x
-        DB::schema()->dropIfExists('site_access_rule');
-        DB::schema()->dropIfExists('next_id');
+        if (DB::schema()->hasTable('site_access_rule')) {
+			DB::schema()->drop('site_access_rule');
+		}
+        if (DB::schema()->hasTable('next_id')) {
+			DB::schema()->drop('next_id');
+		}
 
         // Split the media table into media/media_file so that we can store multiple media
         // files in each media object.
@@ -50,9 +54,12 @@ class Migration37 implements MigrationInterface
                 $table->index(['m_id', 'm_file']);
                 $table->index(['m_file', 'm_id']);
                 $table->index(['m_file', 'multimedia_file_refn']);
-                $table->index(['m_file', 'multimedia_format']);
-                $table->index(['m_file', 'source_media_type']);
-                $table->index(['m_file', 'descriptive_title']);
+				if (DB::driverName() != DB::FIREBIRD) {
+		            // firebird will not add duplicate indexs, but not quite sure why these are a problem
+					$table->index(['m_file', 'multimedia_format']);
+					$table->index(['m_file', 'source_media_type']);
+					$table->index(['m_file', 'descriptive_title']);
+				}
             });
         }
 
@@ -68,14 +75,25 @@ class Migration37 implements MigrationInterface
                 // SQLite also supports SUBSTRING() from 3.34.0 (2020-12-01)
                 $substring_function = DB::driverName() === DB::SQLITE ? 'SUBSTR' : 'SUBSTRING';
 
-                $query->select([
-                    'm_id',
-                    'm_file',
-                    new Expression($substring_function . '(m_filename, 1, 248)'),
-                    new Expression($substring_function . '(m_ext, 1, 4)'),
-                    new Expression($substring_function . '(m_type, 1, 15)'),
-                    new Expression($substring_function . '(m_titl, 1, 248)'),
-                ])->from('media');
+				if (DB::driverName() != DB::FIREBIRD) {
+	                $query->select([
+	                    'm_id',
+	                    'm_file',
+	                    new Expression($substring_function . '(m_filename, 1, 248)'),
+	                    new Expression($substring_function . '(m_ext, 1, 4)'),
+	                    new Expression($substring_function . '(m_type, 1, 15)'),
+	                    new Expression($substring_function . '(m_titl, 1, 248)'),
+	                ])->from('media');
+				} else {
+	                $query->select([
+	                    'm_id',
+	                    'm_file',
+						new Expression($substring_function . '(m_filename FROM 1 FOR 248)'),
+	                    new Expression($substring_function . '(m_ext FROM 1 FOR 4)'),
+	                    new Expression($substring_function . '(m_type FROM 1 FOR 15)'),
+	                    new Expression($substring_function . '(m_titl FROM 1 FOR 248)'),
+	                ])->from('media');
+				}
             });
 
             // The Laravel database library for SQLite can only drop one column at a time.

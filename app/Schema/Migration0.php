@@ -86,7 +86,10 @@ class Migration0 implements MigrationInterface
             $key = DB::prefix($table->getTable() . '_primary');
 
             $table->primary(['user_id', 'gedcom_id', 'setting_name'], $key);
-            $table->index('gedcom_id');
+			if (DB::driverName() != DB::FIREBIRD) {
+		            // since index exists for gedcom_id will not add duplicate
+	            	$table->index('gedcom_id');
+			}
 
             $table->foreign('user_id')->references('user_id')->on('user');
             $table->foreign('gedcom_id')->references('gedcom_id')->on('gedcom');
@@ -164,7 +167,7 @@ class Migration0 implements MigrationInterface
             $table->longText('i_gedcom');
 
             $table->primary(['i_id', 'i_file']);
-            $table->unique(['i_file', 'i_id']);
+//            $table->unique(['i_file', 'i_id']);
         });
 
         DB::schema()->create('families', static function (Blueprint $table): void {
@@ -176,7 +179,7 @@ class Migration0 implements MigrationInterface
             $table->integer('f_numchil');
 
             $table->primary(['f_id', 'f_file']);
-            $table->unique(['f_file', 'f_id']);
+//            $table->unique(['f_file', 'f_id']);
             $table->index('f_husb');
             $table->index('f_wife');
         });
@@ -238,7 +241,7 @@ class Migration0 implements MigrationInterface
             $table->longText('m_gedcom')->nullable();
 
             $table->primary(['m_file', 'm_id']);
-            $table->unique(['m_id', 'm_file']);
+//            $table->unique(['m_id', 'm_file']);
             // Originally, this migration created an index on m_ext and m_type,
             // but we drop those columns in migration 37.
         });
@@ -260,7 +263,7 @@ class Migration0 implements MigrationInterface
             $table->longText('o_gedcom');
 
             $table->primary(['o_id', 'o_file']);
-            $table->unique(['o_file', 'o_id']);
+//            $table->unique(['o_file', 'o_id']);
         });
 
         DB::schema()->create('sources', static function (Blueprint $table): void {
@@ -270,7 +273,7 @@ class Migration0 implements MigrationInterface
             $table->longText('s_gedcom');
 
             $table->primary(['s_id', 's_file']);
-            $table->unique(['s_file', 's_id']);
+//            $table->unique(['s_file', 's_id']);
             $table->index('s_name');
         });
 
@@ -281,7 +284,7 @@ class Migration0 implements MigrationInterface
             $table->string('l_to', 20);
 
             $table->primary(['l_from', 'l_file', 'l_type', 'l_to']);
-            $table->unique(['l_to', 'l_file', 'l_type', 'l_from']);
+//            $table->unique(['l_to', 'l_file', 'l_type', 'l_from']);
         });
 
         DB::schema()->create('name', static function (Blueprint $table): void {
@@ -336,7 +339,7 @@ class Migration0 implements MigrationInterface
             $key1 = DB::prefix($table->getTable() . '_ix1');
 
             $table->primary(['module_name', 'gedcom_id', 'component'], $key0);
-            $table->unique(['gedcom_id', 'module_name', 'component'], $key1);
+//            $table->unique(['gedcom_id', 'module_name', 'component'], $key1);
 
             $table->foreign('module_name')->references('module_name')->on('module');
             $table->foreign('gedcom_id')->references('gedcom_id')->on('gedcom');
