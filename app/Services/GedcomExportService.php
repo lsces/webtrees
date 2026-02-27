@@ -378,7 +378,7 @@ class GedcomExportService
 
         if ($sort_by_xref) {
             $query
-                ->orderBy(new Expression('LENGTH(f_id)'))
+//                ->orderBy(new Expression('LENGTH(f_id)'))
                 ->orderBy('f_id');
         }
 
@@ -393,7 +393,7 @@ class GedcomExportService
 
         if ($sort_by_xref) {
             $query
-                ->orderBy(new Expression('LENGTH(i_id)'))
+//                ->orderBy(new Expression('LENGTH(i_id)'))
                 ->orderBy('i_id');
         }
 
@@ -408,7 +408,7 @@ class GedcomExportService
 
         if ($sort_by_xref) {
             $query
-                ->orderBy(new Expression('LENGTH(s_id)'))
+//                ->orderBy(new Expression('LENGTH(s_id)'))
                 ->orderBy('s_id');
         }
 
@@ -423,7 +423,7 @@ class GedcomExportService
 
         if ($sort_by_xref) {
             $query
-                ->orderBy(new Expression('LENGTH(m_id)'))
+//                ->orderBy(new Expression('LENGTH(m_id)'))
                 ->orderBy('m_id');
         }
 
@@ -440,7 +440,7 @@ class GedcomExportService
         if ($sort_by_xref) {
             $query
                 ->orderBy('o_type')
-                ->orderBy(new Expression('LENGTH(o_id)'))
+//                ->orderBy(new Expression('LENGTH(o_id)'))
                 ->orderBy('o_id');
         }
 
