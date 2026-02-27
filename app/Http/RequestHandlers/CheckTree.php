@@ -91,24 +91,24 @@ final class CheckTree implements RequestHandlerInterface
 
         $q1 = DB::table('individuals')
             ->where('i_file', '=', $tree->id())
-            ->select(['i_id AS xref', 'i_gedcom AS gedcom', new Expression("'INDI' AS type")]);
+            ->select(['i_id AS xref', 'i_gedcom AS gedcom', new Expression("'INDI' AS type"), new Expression("0 AS change_id")]);
         $q2 = DB::table('families')
             ->where('f_file', '=', $tree->id())
-            ->select(['f_id AS xref', 'f_gedcom AS gedcom', new Expression("'FAM' AS type")]);
+            ->select(['f_id AS xref', 'f_gedcom AS gedcom', new Expression("'FAM' AS type"), new Expression("0 AS change_id")]);
         $q3 = DB::table('media')
             ->where('m_file', '=', $tree->id())
-            ->select(['m_id AS xref', 'm_gedcom AS gedcom', new Expression("'OBJE' AS type")]);
+            ->select(['m_id AS xref', 'm_gedcom AS gedcom', new Expression("'OBJE' AS type"), new Expression("0 AS change_id")]);
         $q4 = DB::table('sources')
             ->where('s_file', '=', $tree->id())
-            ->select(['s_id AS xref', 's_gedcom AS gedcom', new Expression("'SOUR' AS type")]);
+            ->select(['s_id AS xref', 's_gedcom AS gedcom', new Expression("'SOUR' AS type"), new Expression("0 AS change_id")]);
         $q5 = DB::table('other')
             ->where('o_file', '=', $tree->id())
-            ->select(['o_id AS xref', 'o_gedcom AS gedcom', 'o_type']);
+            ->select(['o_id AS xref', 'o_gedcom AS gedcom', 'o_type', new Expression("0 AS change_id")]);
         $q6 = DB::table('change')
             ->where('gedcom_id', '=', $tree->id())
-            ->where('status', '=', 'pending')
-            ->orderBy('change_id')
-            ->select(['xref', 'new_gedcom AS gedcom', new Expression("'' AS type")]);
+            ->where('status', '=', "'pending'")
+            ->orderBy('4')
+            ->select(['xref', 'new_gedcom AS gedcom', new Expression("'' AS type"), 'change_id']);
 
         $rows = $q1
             ->unionAll($q2)
