@@ -236,7 +236,7 @@ class GedcomExportService
                         $datum->f_gedcom ??
                         $datum->s_gedcom ??
                         $datum->m_gedcom ??
-                        $datum->o_gedcom;
+                        $datum->o_gedcom ?? '';
                 }
 
                 if ($media_path !== null && preg_match('/^0 @' . Gedcom::REGEX_XREF . '@ OBJE/', $gedcom) === 1) {
