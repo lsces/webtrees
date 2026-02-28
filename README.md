@@ -10,7 +10,7 @@
 
 ## Source information
 
-[https://github.com/fisharebest/webtrees/blob/main/README.md](fisharebest/webtrees README.md)
+https://github.com/fisharebest/webtrees/blob/main/README.md
 
 ## Firebird Fork
 
