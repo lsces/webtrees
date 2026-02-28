@@ -541,16 +541,10 @@ class GedcomImportService
         // array_unique doesn't work with arrays of arrays
         $rows = array_intersect_key($rows, array_unique(array_map(serialize(...), $rows)));
 
-		if (DB::driverName() != DB::FIREBIRD) {
-	        // PDO has a limit of 65535 placeholders, and each row requires 3 placeholders.
-    	    foreach (array_chunk($rows, 20000) as $chunk) {
-        	    DB::table('placelinks')->insert($chunk);
-        	}
-		} else {
-			foreach ( $rows as $chunk) {
-				DB::table('placelinks')->insert($chunk);
-			}
-		}
+		// PDO has a limit of 65535 placeholders, and each row requires 3 placeholders.
+		foreach (array_chunk($rows, 20000) as $chunk) {
+			DB::table('placelinks')->insert($chunk);
+        }
     }
 
     /**
@@ -596,13 +590,7 @@ class GedcomImportService
         // array_unique doesn't work with arrays of arrays
         $rows = array_intersect_key($rows, array_unique(array_map(serialize(...), $rows)));
 
-		if (DB::driverName() != DB::FIREBIRD) {
-	        DB::table('dates')->insert(array_values($rows));
-		} else {
-			foreach ( $rows as $chunk) {
-				DB::table('dates')->insert($chunk);
-			}
-		}
+        DB::table('dates')->insert(array_values($rows));
     }
 
     /**
@@ -628,13 +616,7 @@ class GedcomImportService
             ];
         }
 
-		if (DB::driverName() != DB::FIREBIRD) {
-	        DB::table('link')->insert(array_values($rows));
-		} else {
-			foreach ( $rows as $chunk) {
-				DB::table('link')->insert($chunk);
-			}
-		}
+        DB::table('link')->insert(array_values($rows));
     }
 
     /**
@@ -679,13 +661,7 @@ class GedcomImportService
             ];
         }
 
-		if (DB::driverName() != DB::FIREBIRD) {
-	        DB::table('name')->insert(array_values($rows));
-		} else {
-			foreach ( $rows as $chunk) {
-				DB::table('name')->insert($chunk);
-			}
-		}
+        DB::table('name')->insert(array_values($rows));
     }
 
     /**
