@@ -23,6 +23,9 @@ The problem of indexes that firebird can reuse so objects to the addition of 'du
 
 ## TODO
 
-Currently while pending changes are being listed, they do not seem to be shown in the results and the accept button is not working. I had initially assumed this was down to the inster problem, but it seems not having now address that transparently. So I need to establish what is not happeing. Refuse workis fine :(
+Currently while pending changes are being listed, they do not seem to be shown in the results? 
+
+The pending changes accept button was not working. This has been address and was down to the places delete function. Need to override the mysql version with one more like SQLite, but at some point tidying this further to use WHERE NOT EXISTS () should tidy things further and can be done in the driver.
+
 There are a lot of areas I have not yet exercised, but I'm happy that for people not logged in, it is working so am planning to move my sqlite powered live site over to firebird as a next step before doing more work on the logged in type stuff.
 
