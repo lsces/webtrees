@@ -27,5 +27,7 @@ Currently while pending changes are being listed, they do not seem to be shown i
 
 The pending changes accept button was not working. This has been address and was down to the places delete function. Need to override the mysql version with one more like SQLite, but at some point tidying this further to use WHERE NOT EXISTS () should tidy things further and can be done in the driver.
 
+Gedcom Export is not working, but not sure if some old tags are causing the problem. The errors sheet is quite long using tags that are not supported in gedcom 5.5.1. 
+
 There are a lot of areas I have not yet exercised, but I'm happy that for people not logged in, it is working so am planning to move my sqlite powered live site over to firebird as a next step before doing more work on the logged in type stuff.
 
