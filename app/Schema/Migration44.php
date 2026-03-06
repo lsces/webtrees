@@ -42,7 +42,10 @@ class Migration44 implements MigrationInterface
                 $table->double('longitude')->nullable();
 
                 $table->unique(['parent_id', 'place']);
-                $table->unique(['place', 'parent_id']);
+ 				if (DB::driverName() != DB::FIREBIRD) {
+		            // since unique index exists for fields firebird will not add duplicate
+	            	$table->unique(['place', 'parent_id']);
+		        }
 
                 $table->index(['latitude']);
                 $table->index(['longitude']);
