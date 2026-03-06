@@ -200,7 +200,7 @@ class PendingChangesService
             ->get();
 
         foreach ($changes as $change) {
-            if ($change->new_gedcom === '') {
+            if ($change->new_gedcom ?? '' === '' ) {
                 // delete
                 $this->gedcom_import_service->updateRecord($change->old_gedcom, $record->tree(), true);
             } else {
