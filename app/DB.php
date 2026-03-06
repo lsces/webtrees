@@ -20,6 +20,8 @@ declare(strict_types=1);
 namespace Fisharebest\Webtrees;
 
 use Closure;
+use Illuminate\Container\Container;
+use Illuminate\Database\Connection;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\Expression;
@@ -27,6 +29,8 @@ use PDO;
 use PDOException;
 use RuntimeException;
 use SensitiveParameter;
+use Firebird\Illuminate\FirebirdConnection;
+use Firebird\Illuminate\FirebirdConnector;
 
 final class DB extends Manager
 {
@@ -119,8 +123,19 @@ final class DB extends Manager
             $database = Webtrees::ROOT_DIR . 'data/' . $database . '.sqlite';
         }
 
-        $capsule = new self();
-        $capsule->addConnection([
+        $container = new Container();
+		$capsule = new self($container);
+		
+		if ($driver === self::FIREBIRD) {
+			Connection::resolverFor('firebird', 
+				function ($connection, $database, $tablePrefix, $config)
+				{
+					return new FirebirdConnection($connection, $database, $tablePrefix, $config);
+				});
+            $container->instance('db.connector.firebird', new FirebirdConnector);
+        }
+
+	    $capsule->addConnection([
             'driver'                   => $driver,
             'host'                     => $host,
             'port'                     => $port,
@@ -160,7 +175,14 @@ final class DB extends Manager
 
     public static function lastInsertId(): int
     {
-        $return = self::pdo()->lastInsertId();
+        if (self::driverName() != self::FIREBIRD) {
+            $return = self::pdo()->lastInsertId();
+        } else {
+			// Get the connection instance and access its lastInsertId property
+			$connection = self::connection(); // Get the connection instance
+        	$return = $connection->getLastInsertId();
+		}
+		        
 
         if ($return === false) {
             throw new RuntimeException('Unable to retrieve last insert ID');
