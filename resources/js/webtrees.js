@@ -954,14 +954,10 @@
   };
 
   webtrees.setColorTheme = function (mode) {
-    if (document.body.dataset.bsTheme === undefined) {
-      return;
-    }
-
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      document.body.dataset.bsTheme = 'dark';
+      document.documentElement.dataset.bsTheme = 'dark';
     } else {
-      document.body.dataset.bsTheme = 'light';
+      document.documentElement.dataset.bsTheme = 'light';
     }
   };
 
@@ -982,8 +978,10 @@ $.ajaxSetup({
  */
 document.addEventListener('DOMContentLoaded', function() {
   // Set light/dark mode
-  webtrees.setColorTheme();
-  webtrees.watchForColorThemeChanges();
+  if (document.documentElement.dataset.bsTheme === 'auto') {
+    webtrees.setColorTheme();
+    webtrees.watchForColorThemeChanges();
+  }
 
   // Page elements that load automatically via AJAX.
   // This prevents bad robots from crawling resource-intensive pages.
