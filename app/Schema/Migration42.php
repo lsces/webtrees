@@ -62,10 +62,12 @@ class Migration42 implements MigrationInterface
 
             // Default constraint names are too long for MySQL.
             $key1 = DB::prefix($table->getTable() . '_ix1');
-            $key2 = DB::prefix($table->getTable() . '_ix2');
-
             $table->unique(['gedcom_id', 'module_name', 'interface'], $key1);
-            $table->unique(['module_name', 'gedcom_id', 'interface'], $key2);
+			if (DB::driverName() != DB::FIREBIRD) {
+				// since unique index exists for fields firebird will not add duplicate
+	            $key2 = DB::prefix($table->getTable() . '_ix2');
+				$table->unique(['module_name', 'gedcom_id', 'interface'], $key2);
+			}
 
             $table->foreign('module_name')->references('module_name')->on('module')->cascadeOnDelete();
             $table->foreign('gedcom_id')->references('gedcom_id')->on('gedcom')->cascadeOnDelete();

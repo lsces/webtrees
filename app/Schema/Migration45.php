@@ -54,10 +54,9 @@ final readonly class Migration45 implements MigrationInterface
                     // SQL-Server can't use CASCADE or SET NULL constraints here, as it can't handle multiple paths
                     $table->foreign(columns: ['contact_user_id'])->references(['user_id'])->on('user');
                     $table->foreign(columns: ['support_user_id'])->references(['user_id'])->on('user');
-                } else {
+                } else if !(DB::driverName() === DB::FIREBIRD) {
                     $table->foreign(columns: ['contact_user_id'])->references(['user_id'])->on('user')->nullOnDelete()->cascadeOnUpdate();
-                    $table->foreign(columns: ['support_user_id'])->references(['user_id'])->on('user')->nullOnDelete()->cascadeOnUpdate();
-                }
+                    $table->foreign(columns: ['support_user_id'])->references(['user_id'])->on('user')->nullOnDelete()->cascadeOnUpdate();                }
             });
         }
 
