@@ -324,8 +324,9 @@ class MediaFileService
         }
 
         return $query
+            ->select(new Expression($path . ' AS file_path'))
             ->orderBy(new Expression($path))
-            ->pluck(new Expression($path . ' AS value'));
+            ->pluck('file_path');
     }
 
     /**
@@ -363,7 +364,8 @@ class MediaFileService
             ->join('gedcom', 'gedcom_id', '=', 'm_file')
             ->where('multimedia_file_refn', 'NOT LIKE', 'http://%')
             ->where('multimedia_file_refn', 'NOT LIKE', 'https://%')
-            ->pluck(new Expression('media_folder || multimedia_file_refn AS value'))
+            ->select(new Expression('media_folder || multimedia_file_refn AS file_path'))
+            ->pluck('file_path')
             ->map(static fn (string $path): string => dirname($path) . '/');
 
         $media_roots = DB::table('gedcom')
