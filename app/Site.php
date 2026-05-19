@@ -104,6 +104,13 @@ class Site
     public static array $preferences = [];
 
     /**
+     * Overrides from config.ini.php — these take priority over the database.
+     *
+     * @var array<string,string>
+     */
+    public static array $config_overrides = [];
+
+    /**
      * Set the site’s configuration settings.
      *
      * @param string $setting_name
@@ -144,6 +151,10 @@ class Site
      */
     public static function getPreference(string $setting_name): string
     {
+        if (isset(self::$config_overrides[$setting_name])) {
+            return self::$config_overrides[$setting_name];
+        }
+
         // There are lots of settings, and we need to fetch lots of them on every page
         // so it is quicker to fetch them all in one go.
         if (self::$preferences === []) {

@@ -63,6 +63,7 @@ final class SetupWizard implements RequestHandlerInterface
     private const string DEFAULT_PREFIX = 'wt_';
     private const array DEFAULT_DATA    = [
         'baseurl'  => '',
+        'data_dir' => Webtrees::DATA_DIR,
         'lang'     => '',
         'dbtype'   => self::DEFAULT_DBTYPE,
         'dbhost'   => '',

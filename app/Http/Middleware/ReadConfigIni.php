@@ -20,6 +20,7 @@ declare(strict_types=1);
 namespace Fisharebest\Webtrees\Http\Middleware;
 
 use Fisharebest\Webtrees\Http\RequestHandlers\SetupWizard;
+use Fisharebest\Webtrees\Site;
 use Fisharebest\Webtrees\Webtrees;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -50,6 +51,11 @@ class ReadConfigIni implements MiddlewareInterface
             // Store the configuration settings as request attributes.
             foreach ($config as $key => $value) {
                 $request = $request->withAttribute($key, $value);
+            }
+
+            // data_dir in config.ini.php is the authoritative INDEX_DIRECTORY for this machine.
+            if (isset($config['data_dir']) && $config['data_dir'] !== '') {
+                Site::$config_overrides['INDEX_DIRECTORY'] = $config['data_dir'];
             }
         } else {
             // No configuration file? Run the setup wizard to create one.

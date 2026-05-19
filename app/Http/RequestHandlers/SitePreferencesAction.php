@@ -23,14 +23,19 @@ use Fisharebest\Webtrees\FlashMessages;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Site;
 use Fisharebest\Webtrees\Validator;
+use Fisharebest\Webtrees\Webtrees;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 use function e;
+use function file_get_contents;
+use function file_put_contents;
 use function is_writable;
+use function preg_replace;
 use function redirect;
 use function route;
+use function str_contains;
 
 final class SitePreferencesAction implements RequestHandlerInterface
 {
@@ -48,7 +53,8 @@ final class SitePreferencesAction implements RequestHandlerInterface
 
         if (is_dir($index_directory)) {
             if (is_writable($index_directory)) {
-                Site::setPreference('INDEX_DIRECTORY', $index_directory);
+                $this->updateConfigDataDir($index_directory);
+                Site::$config_overrides['INDEX_DIRECTORY'] = $index_directory;
             } else {
                 FlashMessages::addMessage(I18N::translate('Cannot write to the folder “%s”.', e($index_directory)), 'danger');
             }
@@ -65,5 +71,21 @@ final class SitePreferencesAction implements RequestHandlerInterface
         $url = route(ControlPanel::class);
 
         return redirect($url);
+    }
+
+    private function updateConfigDataDir(string $data_dir): void
+    {
+        $config_file = Webtrees::CONFIG_FILE;
+        $content     = file_get_contents($config_file);
+
+        $escaped = addcslashes($data_dir, '"');
+
+        if (str_contains($content, 'data_dir=')) {
+            $content = preg_replace('/^data_dir=".*"$/m', 'data_dir="' . $escaped . '"', $content);
+        } else {
+            $content .= 'data_dir="' . $escaped . '"' . "\n";
+        }
+
+        file_put_contents($config_file, $content);
     }
 }

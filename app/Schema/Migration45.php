@@ -56,8 +56,7 @@ final readonly class Migration45 implements MigrationInterface
                     $table->foreign(columns: ['support_user_id'])->references(['user_id'])->on('user');
                 } elseif (DB::driverName() !== DB::FIREBIRD) {
                     $table->foreign(columns: ['contact_user_id'])->references(['user_id'])->on('user')->nullOnDelete()->cascadeOnUpdate();
-                    $table->foreign(columns: ['support_user_id'])->references(['user_id'])->on('user')->nullOnDelete()->cascadeOnUpdate();
-                }
+                    $table->foreign(columns: ['support_user_id'])->references(['user_id'])->on('user')->nullOnDelete()->cascadeOnUpdate();                }
             });
         }
 
